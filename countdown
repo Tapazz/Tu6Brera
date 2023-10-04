@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="countdown"></div>
+    <script src="script.js"></script>
+</body>
+</html>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#countdown {
+    font-size: 36px;
+}
+const countdownElement = document.getElementById('countdown');
+
+// Imposta la data di scadenza (formato: anno, mese-1, giorno, ore, minuti, secondi)
+const deadline = new Date(2023, 10, 08, 08, 00, 00).getTime();
+
+// Aggiorna il conto alla rovescia ogni secondo
+const countdownInterval = setInterval(function() {
+    const currentTime = new Date().getTime();
+    const timeRemaining = deadline - currentTime;
+
+    // Calcola giorni, ore, minuti e secondi rimanenti
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Mostra il conto alla rovescia nell'elemento HTML
+    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    // Se il conto alla rovescia è scaduto, mostra un messaggio
+    if (timeRemaining < 0) {
+        clearInterval(countdownInterval);
+        countdownElement.innerHTML = 'Il conto alla rovescia è scaduto!';
+    }
+}, 1000);
